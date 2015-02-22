@@ -1807,7 +1807,7 @@ static void utmi_phy_pmc_disable(struct tegra_usb_phy *phy)
 	}
 }
 
-static int utmi_phy_is_pmc_wakeup(struct tegra_usb_phy *phy)
+static bool utmi_phy_is_pmc_wakeup(struct tegra_usb_phy *phy)
 {
 	u32 val;
 	int inst = phy->inst;
@@ -2525,7 +2525,7 @@ static int uhsic_phy_bus_port_power(struct tegra_usb_phy *phy)
 	return 0;
 }
 
-static int uhsic_phy_is_pmc_wakeup(struct tegra_usb_phy *phy)
+static bool uhsic_phy_is_pmc_wakeup(struct tegra_usb_phy *phy)
 {
 	u32 val;
 	int inst = phy->inst;
