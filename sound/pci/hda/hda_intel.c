@@ -729,11 +729,11 @@ static char *driver_short_names[] = {
 #define azx_writew(chip, reg, value) \
 	tegra_write((chip)->remap_addr, ICH6_REG_##reg, value, 16)
 #define azx_readw(chip, reg) \
-	tegra_read((chip)->remap_addr, ICH6_REG_##reg, 16)
+	(unsigned short)tegra_read((chip)->remap_addr, ICH6_REG_##reg, 16)
 #define azx_writeb(chip, reg, value) \
 	tegra_write((chip)->remap_addr, ICH6_REG_##reg, value, 8)
 #define azx_readb(chip, reg) \
-	tegra_read((chip)->remap_addr, ICH6_REG_##reg, 8)
+	(unsigned char)tegra_read((chip)->remap_addr, ICH6_REG_##reg, 8)
 
 #define azx_sd_writel(dev, reg, value) \
 	writel(value, (dev)->sd_addr + ICH6_REG_##reg)
@@ -742,11 +742,11 @@ static char *driver_short_names[] = {
 #define azx_sd_writew(dev, reg, value) \
 	tegra_write((dev)->sd_addr, ICH6_REG_##reg, value, 16)
 #define azx_sd_readw(dev, reg) \
-	tegra_read((dev)->sd_addr, ICH6_REG_##reg, 16)
+	(unsigned short)tegra_read((dev)->sd_addr, ICH6_REG_##reg, 16)
 #define azx_sd_writeb(dev, reg, value) \
 	tegra_write((dev)->sd_addr, ICH6_REG_##reg, value, 8)
 #define azx_sd_readb(dev, reg) \
-	tegra_read((dev)->sd_addr, ICH6_REG_##reg, 8)
+	(unsigned char)tegra_read((dev)->sd_addr, ICH6_REG_##reg, 8)
 
 #else /* CONFIG_SND_HDA_PLATFORM_NVIDIA_TEGRA */
 #define azx_writel(chip,reg,value) \
