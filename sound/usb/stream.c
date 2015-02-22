@@ -600,6 +600,7 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip, int iface_no)
 	if (chip->usb_id == USB_ID(0x04fa, 0x4201))
 		num = 4;
 
+	stream = SNDRV_PCM_STREAM_LAST + 1;
 	for (i = 0; i < num; i++) {
 		alts = &iface->altsetting[i];
 		altsd = get_iface_desc(alts);
