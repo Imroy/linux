@@ -3830,8 +3830,12 @@ static void init_filesystem_firmware_done(const struct firmware *fw,
 
 	memcpy(fw_data, fw->data, fw_size);
 	dev_info(&pdev->dev,
-		"Firmware DMA Memory: dma 0x%p mapped 0x%p (%d Bytes)\n",
-		(void *) fw_dma, fw_data, fw_size);
+#ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
+		"Firmware DMA Memory: dma 0x%lx mapped 0x%p (%d Bytes)\n",
+#else
+		"Firmware DMA Memory: dma 0x%x mapped 0x%p (%d Bytes)\n",
+#endif
+		fw_dma, fw_data, fw_size);
 
 	/* all set and ready to go */
 	tegra->firmware.data = fw_data;
