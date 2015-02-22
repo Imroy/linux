@@ -2742,24 +2742,6 @@ static struct rmi_function_driver function_driver = {
 #endif
 };
 
-static int __init rmi_f11_module_init(void)
-{
-	int error;
-
-	error = driver_register(&function_driver.driver);
-	if (error < 0) {
-		pr_err("%s: register driver failed!\n", __func__);
-		return error;
-	}
-
-	return 0;
-}
-
-static void __exit rmi_f11_module_exit(void)
-{
-	driver_unregister(&function_driver.driver);
-}
-
 static ssize_t f11_mode_store(struct device *dev,
 				    struct device_attribute *attr,
 				    const char *buf,
