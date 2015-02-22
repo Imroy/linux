@@ -110,6 +110,7 @@ static int max8831_bl_probe(struct platform_device *pdev)
 	struct backlight_device *bl;
 	struct backlight_properties props;
 	struct platform_max8831_backlight_data *pData = pdev->dev.platform_data;
+	int rc;
 
 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
 	if (data == NULL)
@@ -127,7 +128,12 @@ static int max8831_bl_probe(struct platform_device *pdev)
 		       __func__);
 		data->regulator = NULL;
 	} else {
-		regulator_enable(data->regulator);
+		rc = regulator_enable(data->regulator);
+		if (rc < 0) {
+			dev_err(&pdev->dev, "%s: Unable to enable the backlight regulator\n",
+			       __func__);
+			return rc;
+		}
 	}
 
 	props.type = BACKLIGHT_RAW;
@@ -178,9 +184,13 @@ static int max8831_bl_resume(struct device *dev)
 	struct platform_device *pdev = to_platform_device(dev);
 	struct backlight_device *bl = platform_get_drvdata(pdev);
 	struct max8831_backlight_data *data = bl_get_data(bl);
+	int rc;
 
-	if (data->regulator)
-		regulator_enable(data->regulator);
+	if (data->regulator) {
+		rc = regulator_enable(data->regulator);
+		if (rc < 0)
+			return rc;
+	}
 	backlight_update_status(bl);
 	return 0;
 }

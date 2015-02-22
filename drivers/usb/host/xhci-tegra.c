@@ -3746,6 +3746,7 @@ tegra_xhci_resume(struct platform_device *pdev)
 {
 	struct tegra_xhci_hcd *tegra = platform_get_drvdata(pdev);
 	struct xhci_hcd *xhci = tegra->xhci;
+	int rc;
 
 	dev_dbg(&pdev->dev, "%s\n", __func__);
 
@@ -3765,8 +3766,14 @@ tegra_xhci_resume(struct platform_device *pdev)
 	disable_irq_wake(tegra->usb2_irq);
 	tegra->lp0_exit = true;
 
-	regulator_enable(tegra->xusb_s1p05v_reg);
-	regulator_enable(tegra->xusb_s1p8v_reg);
+	rc = regulator_enable(tegra->xusb_s1p05v_reg);
+	if (rc < 0)
+		return rc;
+
+	rc = regulator_enable(tegra->xusb_s1p8v_reg);
+	if (rc < 0)
+		return rc;
+
 	tegra_usb2_clocks_init(tegra);
 
 	return 0;

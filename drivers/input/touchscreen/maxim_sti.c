@@ -734,7 +734,7 @@ static void enable_double_tap(struct dev_data *dd)
 
 static int regulator_control(struct dev_data *dd, bool on)
 {
-	int ret = 0;
+	int ret = 0, dummy;
 
 	if (!dd->reg_avdd || !dd->reg_dvdd)
 		return 0;
@@ -769,7 +769,7 @@ static int regulator_control(struct dev_data *dd, bool on)
 			ret = regulator_disable(dd->reg_dvdd);
 		if (ret < 0) {
 			ERROR("Failed to disable regulator dvdd: %d", ret);
-			regulator_enable(dd->reg_avdd);
+			dummy = regulator_enable(dd->reg_avdd);
 			return ret;
 		}
 
