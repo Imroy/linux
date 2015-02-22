@@ -2611,7 +2611,7 @@ MODULE_VERSION(RMI_DRIVER_VERSION);
 */
 
 
-static ssize_t SynSens_char_dev_read(struct file *, const char __user *,
+static ssize_t SynSens_char_dev_read(struct file *, char __user *,
 				     size_t, loff_t *);
 static ssize_t SynSens_char_dev_write(struct file *, const char __user *,
 				      size_t, loff_t *);
@@ -2767,7 +2767,7 @@ raw_data_char_dev_register(struct rmi_fn_54_data *rmi_f54_instance_data)
 
 /* unsigned char junk_char_buf[2048]; */
 
-static ssize_t SynSens_char_dev_read(struct file *filp, const char __user *buf,
+static ssize_t SynSens_char_dev_read(struct file *filp, char __user *buf,
 				     size_t count, loff_t *f_pos)
 {
 	struct rmi_fn_54_data *my_instance_data = NULL;
