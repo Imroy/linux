@@ -30,9 +30,7 @@ static DECLARE_DELAYED_WORK(ping_work, ping_work_func);
 static void
 ping_work_func(struct work_struct *work)
 {
-	struct delayed_work *dwork = to_delayed_work(work);
-
-//	pr_info("%s\n", __func__);
+	/* pr_info("%s\n", __func__); */
 
 	/* create ping request */
 

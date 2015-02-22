@@ -1165,7 +1165,7 @@ wl_cfg80211_add_virtual_iface(struct wiphy *wiphy,
 
 	if (wl_get_drv_status(wl, CONNECTING, _ndev)) {
 		WL_ERR(("Already AP connection going on\n"));
-		return -EBUSY;
+		return ERR_PTR(-EBUSY);
 	}
 
 	WL_DBG(("if name: %s, type: %d\n", name, type));
@@ -1374,7 +1374,7 @@ wl_cfg80211_del_virtual_iface(struct wiphy *wiphy, bcm_struct_cfgdev *cfgdev)
 	WL_DBG(("Enter\n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 #if defined(WL_CFG80211_P2P_DEV_IF)
 	if (cfgdev->iftype == NL80211_IFTYPE_P2P_DEVICE) {
@@ -1480,7 +1480,7 @@ wl_cfg80211_change_virtual_iface(struct wiphy *wiphy, struct net_device *ndev,
 	WL_DBG(("Enter type %d\n", type));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 	switch (type) {
 	case NL80211_IFTYPE_MONITOR:
 	case NL80211_IFTYPE_WDS:
@@ -3846,7 +3846,7 @@ wl_cfg80211_del_key(struct wiphy *wiphy, struct net_device *dev,
 	s32 bssidx;
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	if (wl_cfgp2p_find_idx(wl, dev, &bssidx) != BCME_OK) {
 		WL_ERR(("Find p2p index from dev(%p) failed\n", dev));
@@ -4419,7 +4419,7 @@ wl_cfg80211_remain_on_channel(struct wiphy *wiphy, bcm_struct_cfgdev *cfgdev,
 	struct wl_priv *wl = wiphy_priv(wiphy);
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	ndev = cfgdev_to_wlc_ndev(cfgdev, wl);
 
@@ -5023,7 +5023,7 @@ wl_cfg80211_mgmt_tx(struct wiphy *wiphy, bcm_struct_cfgdev *cfgdev,
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 	dev = cfgdev_to_wlc_ndev(cfgdev, wl);
 
 	/* find bssidx based on dev */
@@ -5212,7 +5212,7 @@ wl_cfg80211_set_channel(struct wiphy *wiphy, struct net_device *dev,
 	struct wl_priv *wl = wiphy_priv(wiphy);
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 	dev = ndev_to_wlc_ndev(dev, wl);
 	_chan = ieee80211_frequency_to_channel(chan->center_freq);
 	WL_ERR(("netdev_ifidx(%d), chan_type(%d) target channel(%d) \n",
@@ -6028,7 +6028,7 @@ wl_cfg80211_del_station(
 	}
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	dev = ndev_to_wlc_ndev(ndev, wl);
 
@@ -6083,7 +6083,7 @@ wl_cfg80211_start_ap(
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	if (dev == wl_to_prmry_ndev(wl)) {
 		WL_DBG(("Start AP req on primary iface: Softap\n"));
@@ -6175,7 +6175,7 @@ wl_cfg80211_stop_ap(
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	if (dev == wl_to_prmry_ndev(wl)) {
 		dev_role = NL80211_IFTYPE_AP;
@@ -6256,7 +6256,7 @@ wl_cfg80211_change_beacon(
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 	if (dev == wl_to_prmry_ndev(wl)) {
 		dev_role = NL80211_IFTYPE_AP;
 	}
@@ -6332,7 +6332,7 @@ wl_cfg80211_add_set_beacon(struct wiphy *wiphy, struct net_device *dev,
 		info->interval, info->dtim_period, info->head_len, info->tail_len));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	if (dev == wl_to_prmry_ndev(wl)) {
 		dev_role = NL80211_IFTYPE_AP;
@@ -6480,7 +6480,7 @@ int wl_cfg80211_sched_scan_start(struct wiphy *wiphy,
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	WL_PNO((">>> SCHED SCAN START\n"));
 	WL_PNO(("Enter n_match_sets:%d   n_ssids:%d \n",
@@ -6538,7 +6538,7 @@ int wl_cfg80211_sched_scan_stop(struct wiphy *wiphy, struct net_device *dev)
 	WL_DBG(("Enter \n"));
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
 	WL_PNO((">>> SCHED SCAN STOP\n"));
 
@@ -10822,12 +10822,13 @@ wl_cfg80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
 	s32 ret = 0;
 #ifdef WLTDLS
 	struct wl_priv *wl = wlcfg_drv_priv;
+	tdls_iovar_t info;
+	dhd_pub_t *dhd;
 
 	if (!wl)
-		return ERR_PTR(-EINVAL);
+		return -EINVAL;
 
-	tdls_iovar_t info;
-	dhd_pub_t *dhd = (dhd_pub_t *)(wl->pub);
+	dhd = (dhd_pub_t *)(wl->pub);
 	memset(&info, 0, sizeof(tdls_iovar_t));
 	if (peer)
 		memcpy(&info.ea, peer, ETHER_ADDR_LEN);

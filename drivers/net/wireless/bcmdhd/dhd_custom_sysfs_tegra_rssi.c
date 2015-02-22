@@ -31,7 +31,6 @@ static DECLARE_DELAYED_WORK(rssi_work, rssi_work_func);
 static void
 rssi_work_func(struct work_struct *work)
 {
-	struct delayed_work *dwork = to_delayed_work(work);
 	struct net_device *net = dhd_custom_sysfs_tegra_histogram_stat_netdev;
 	char *netif = net ? net->name : "";
 	scb_val_t scb_val;

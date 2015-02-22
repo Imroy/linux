@@ -55,7 +55,6 @@ tegra_sysfs_histogram_stat_work_stop(void)
 static void
 stat_work_func(struct work_struct *work)
 {
-	struct delayed_work *dwork = to_delayed_work(work);
 	struct net_device *net = dhd_custom_sysfs_tegra_histogram_stat_netdev;
 	char *netif = net ? net->name : "";
 	wl_cnt_t *cnt;
