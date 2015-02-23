@@ -2870,14 +2870,14 @@ rmi_f11_raw_finger_char_dev_write(struct file *filp, const char __user *buf,
 static int
 rmi_f11_raw_finger_char_dev_open(struct inode *inp, struct file *filp)
 {
+	int ret_value = 0;
+
 	/* store the device pointer to file structure */
 
 	struct raw_finger_data_feed_char_dev *my_dev ;
 	my_dev = container_of(inp->i_cdev,
 			      struct raw_finger_data_feed_char_dev,
 			      raw_data_dev);
-
-	int ret_value = 0;
 
 	filp->private_data = my_dev;
 
