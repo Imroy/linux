@@ -1045,7 +1045,7 @@ static int rmi_device_reflash(struct rmi_device *rmi_dev)
 
 	if (!has_f01) {
 		dev_warn(dev, "WARNING: Failed to find F01 for initial reflash.\n");
-	return -ENODEV;
+		return -ENODEV;
 	}
 
 	if (has_f34)
