@@ -744,25 +744,24 @@ static int tegra_ehci_suspend(struct platform_device *pdev, pm_message_t state)
 	/* bus suspend could have failed because of remote wakeup resume */
 	if (tegra->bus_suspended_fail)
 		return -EBUSY;
-	else {
-		if (!tegra->is_skip_resume_enabled) {
-			err = tegra_usb_phy_power_off(tegra->phy);
-			if (err < 0)
-				return err;
-			if (pdata->u_data.host.turn_off_vbus_on_lp0) {
-				tegra_usb_enable_vbus(tegra->phy, false);
-				tegra_usb_phy_pmc_disable(tegra->phy);
-			}
+
+	if (!tegra->is_skip_resume_enabled) {
+		err = tegra_usb_phy_power_off(tegra->phy);
+		if (err < 0)
+			return err;
+		if (pdata->u_data.host.turn_off_vbus_on_lp0) {
+			tegra_usb_enable_vbus(tegra->phy, false);
+			tegra_usb_phy_pmc_disable(tegra->phy);
 		}
-		if (tegra->irq) {
-			err = enable_irq_wake(tegra->irq);
-			if (err < 0)
-				dev_err(&pdev->dev,
-					"Couldn't enable USB host mode wakeup, irq=%d, "
-					"error=%d\n", tegra->irq, err);
-		}
-		return err;
 	}
+	if (tegra->irq) {
+		err = enable_irq_wake(tegra->irq);
+		if (err < 0)
+			dev_err(&pdev->dev,
+				"Couldn't enable USB host mode wakeup, irq=%d, "
+				"error=%d\n", tegra->irq, err);
+	}
+	return err;
 }
 #endif
 
