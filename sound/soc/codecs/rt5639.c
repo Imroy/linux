@@ -688,7 +688,7 @@ int rt5639_conn_mux_path(struct snd_soc_codec *codec,
 	if (update) {
 		snd_soc_dapm_sync(dapm);
 
-		kcontrol = &w->kcontrols[0];
+		kcontrol = (struct snd_kcontrol_new *)&w->kcontrols[0];
 		em = (struct soc_enum *)kcontrol->private_value;
 		for (i = 0; i < em->max; i++)
 			if (!(strcmp(path_name, em->texts[i])))
