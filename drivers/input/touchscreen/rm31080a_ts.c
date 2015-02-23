@@ -1835,7 +1835,7 @@ static void rm_work_handler(struct work_struct *work)
 		g_st_rm_slow_scan_cmd, NULL);
 		g_st_ts.b_slow_scan_flg = false;
 	}
-#endif ENABLE_SLOW_SCAN
+#endif /* ENABLE_SLOW_SCAN */
 
 	u32_flag = rm_tch_ctrl_configure();
 
