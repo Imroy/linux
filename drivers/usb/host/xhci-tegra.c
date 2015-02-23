@@ -4369,7 +4369,7 @@ static int tegra_xhci_probe(struct platform_device *pdev)
 	tegra->bdata->portmap = tegra->pdata->portmap;
 	tegra->bdata->hsic[0].pretend_connect =
 				tegra->pdata->pretend_connect_0;
-	if (tegra->bdata->portmap == NULL)
+	if (tegra->bdata->portmap == 0)
 		return -ENODEV;
 	tegra->bdata->lane_owner = tegra->pdata->lane_owner;
 	tegra->soc_config = soc_config;
