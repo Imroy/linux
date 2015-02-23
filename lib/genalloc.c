@@ -285,7 +285,7 @@ unsigned long gen_pool_alloc_addr(struct gen_pool *pool, size_t size,
 	if (size == 0)
 		return 0;
 
-	if (alloc_addr & (1 << order) - 1)
+	if (alloc_addr & ((1UL << order) - 1))
 		return 0;
 
 	nbits = (size + (1UL << order) - 1) >> order;
