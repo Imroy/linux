@@ -1653,7 +1653,7 @@ int rmi_f54_attention(struct rmi_function_dev *fn_dev,
 	u8 fifo[2];
 	struct rmi_fn_54_data *data = fn_dev->data;
 	int error = 0;
-	int retval;
+	int retval = 0;
 	struct rmi_device *rmi_dev = fn_dev->rmi_dev;
 	struct rmi_driver_data *driver_data = dev_get_drvdata(&rmi_dev->dev);
 	struct rmi_device_platform_data *pdata;

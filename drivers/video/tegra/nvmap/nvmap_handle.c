@@ -180,7 +180,7 @@ static int handle_page_alloc(struct nvmap_client *client,
 	size_t size = PAGE_ALIGN(h->size);
 	unsigned int nr_page = size >> PAGE_SHIFT;
 	pgprot_t prot;
-	unsigned int i = 0, page_index;
+	unsigned int i = 0, page_index = 0;
 	struct page **pages;
 #ifdef CONFIG_NVMAP_PAGE_POOLS
 	struct nvmap_page_pool *pool = NULL;

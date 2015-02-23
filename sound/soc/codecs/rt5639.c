@@ -3003,7 +3003,7 @@ static ssize_t rt5639_codec_adb_show(struct device *dev,
 	struct i2c_client *client = to_i2c_client(dev);
 	struct rt5639_priv *rt5639 = i2c_get_clientdata(client);
 	struct snd_soc_codec *codec = rt5639->codec;
-	unsigned int val;
+	unsigned int val = 0;
 	int cnt = 0, i;
 
 	for (i = 0; i < rt5639->adb_reg_num; i++) {
