@@ -2932,17 +2932,17 @@ static ssize_t SynSens_char_dev_write(struct file *filp, const char __user *buf,
 	int retval = 0;
 	pr_info("%s: Write called.\n", __func__);
 	if (!filp) {
-		dev_err(&fn_dev->dev, "%s: called with NULL file pointer\n", __func__);
+/*		dev_err(&fn_dev->dev, "%s: called with NULL file pointer\n", __func__); */
 		return -EINVAL;
 	}
 	char_dev_container = filp->private_data;
+	f54 = char_dev_container->my_parents_instance_data;
+	fn_dev = f54->fn_dev;
 
 	if (!char_dev_container) {
 		dev_err(&fn_dev->dev, "%s: called with NULL private_data\n", __func__);
 		return -EINVAL;
 	}
-	f54 = char_dev_container->my_parents_instance_data;
-	fn_dev = f54->fn_dev;
 	driver = fn_dev->rmi_dev->driver;
 	driver_data = dev_get_drvdata(&fn_dev->rmi_dev->dev);
 	memset(tmpbuf, '\0', 128);
