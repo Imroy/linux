@@ -44,7 +44,7 @@ static struct miscdevice timerinfo_dev = {
 static int timerinfo_dev_mmap(struct file *file, struct vm_area_struct *vma)
 {
 	/* start at first page containing TIMERUS_CNTR_1US */
-	if (IS_ERR_OR_NULL(timer_reg_base_pa)) {
+	if (!timer_reg_base_pa || IS_ERR_VALUE((unsigned long)timer_reg_base_pa)) {
 		pr_err("%s: Invalid timer_base_address\n", __func__);
 		return -EINVAL;
 	}
