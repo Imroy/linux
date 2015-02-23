@@ -333,7 +333,7 @@ static int bluedroid_pm_probe(struct platform_device *pdev)
 		/* Initialize timer */
 		init_timer(&bluedroid_pm_timer);
 		bluedroid_pm_timer.function = bluedroid_pm_timer_expire;
-		bluedroid_pm_timer.data = bluedroid_pm;
+		bluedroid_pm_timer.data = (unsigned long)bluedroid_pm;
 	} else {
 		BDP_DBG("gpio_ext_wake not registered\n");
 		bluedroid_pm->ext_wake = 0;
