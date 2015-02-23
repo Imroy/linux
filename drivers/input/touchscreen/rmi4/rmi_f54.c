@@ -1655,7 +1655,6 @@ int rmi_f54_attention(struct rmi_function_dev *fn_dev,
 	int error = 0;
 	int retval = 0;
 	struct rmi_device *rmi_dev = fn_dev->rmi_dev;
-	struct rmi_driver_data *driver_data = dev_get_drvdata(&rmi_dev->dev);
 	struct rmi_device_platform_data *pdata;
 	int current_block_delay_us;
 	int current_read_delay_us;
@@ -2289,12 +2288,6 @@ static ssize_t rmi_fn_54_data_read(struct file *data_file, struct kobject *kobj,
 	struct device *dev;
 	struct rmi_function_dev *fn_dev;
 	struct rmi_fn_54_data *instance_data;
-
-	struct device *parent_dev;
-	struct rmi_device *rmi_dev;
-	struct rmi_device *parent_rmi_dev;
-	struct rmi_driver *parent_rmi_drvr;
-	struct rmi_driver_data *data;
 
 	int i;
 	// int error;

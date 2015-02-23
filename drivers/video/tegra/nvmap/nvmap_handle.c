@@ -184,11 +184,8 @@ static int handle_page_alloc(struct nvmap_client *client,
 	struct page **pages;
 #ifdef CONFIG_NVMAP_PAGE_POOLS
 	struct nvmap_page_pool *pool = NULL;
-	phys_addr_t paddr;
 #endif
 	gfp_t gfp = GFP_NVMAP;
-	unsigned long kaddr;
-	pte_t **pte = NULL;
 
 	if (zero_memory)
 		gfp |= __GFP_ZERO;

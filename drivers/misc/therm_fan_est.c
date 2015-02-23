@@ -59,8 +59,6 @@ static void fan_set_trip_temp_hyst(struct therm_fan_estimator *est, int trip,
 							unsigned long hyst_temp,
 							unsigned long trip_temp)
 {
-	int i;
-
 	est->active_hysteresis[trip] = hyst_temp;
 	est->active_trip_temps[trip] = trip_temp;
 	est->active_trip_temps_hyst[(trip << 1)] = trip_temp;

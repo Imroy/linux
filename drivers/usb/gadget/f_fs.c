@@ -2284,9 +2284,6 @@ static int ffs_func_bind(struct usb_configuration *c,
 	const int super = gadget_is_superspeed(func->gadget) &&
 		func->ffs->ss_descs_count;
 	int ret;
-	unsigned char *p;
-	unsigned raw_descs_length = ffs->raw_fs_descs_length +
-		ffs->raw_hs_descs_length + ffs->raw_ss_descs_length;
 
 	/* Make it a single chunk, less management later on */
 	struct {

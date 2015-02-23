@@ -4315,7 +4315,6 @@ static int tegra_xhci_probe(struct platform_device *pdev)
 	unsigned pad;
 	u32 val;
 	int ret;
-	int irq;
 	const struct tegra_xusb_soc_config *soc_config;
 	const struct of_device_id *match;
 

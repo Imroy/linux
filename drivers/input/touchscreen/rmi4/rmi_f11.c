@@ -2820,8 +2820,6 @@ rmi_f11_raw_finger_char_dev_write(struct file *filp, const char __user *buf,
 	int retval = 0;
 	struct f11_data *my_instance_data = NULL;
 	struct raw_finger_data_feed_char_dev *char_dev_container = NULL;
-	ssize_t ret_value  = 0;
-	int i = 0;
 	int len;
 
 	if (!filp) {
